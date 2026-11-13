@@ -51,36 +51,32 @@ Understand how the OS manages physical memory frames under page faults.
 
 ---
 
-### 💾 Module 3 — Disk Scheduling Simulator
+### 💾 Module 3 — Disk Simulator Engine (HDD & NVMe)
 
-See how the disk head moves across cylinders to service I/O requests.
+Analyze modern storage hardware mechanics and I/O request sequencing.
 
-| Algorithms |
+| Features & Models |
 |---|
-| First-Come, First-Served (FCFS) |
-| Shortest Seek Time First (SSTF) |
-| SCAN (Elevator) |
-| C-SCAN (Circular SCAN) |
-| LOOK |
-| C-LOOK |
+| **Classical Disk Scheduling:** FCFS, SSTF, SCAN (Elevator), C-SCAN, LOOK, C-LOOK |
+| **Zone Bit Recording (ZBR):** Physical variable-sector track density simulation |
+| **Dual-Actuator HDD Mechanics:** Parallel head sweep coordination |
+| **Multi-Channel NVMe SSD Parallelism:** High-speed flash channel bandwidth and queue routing |
 
 **Features:**
-- 📉 **Interactive SVG trajectory chart** — animated head movement path drawn in real time
-- 🔢 **Cylinder distance calculations** — per-step seek distances and running totals
-- 🎯 **Preset test cases** — including High Locality, Thrashing Simulation, and Sequential Access patterns
-- ↔️ **Direction control** — configure initial head position and sweep direction for SCAN/LOOK variants
+- 📉 **Interactive SVG trajectory charts** — animated head movement path and seek-time tracking
+- ⚡ **Hardware physics engines** — models seek latency, rotational delay, and flash bandwidth transfer speeds
+- 🎯 **Preset test cases** — High Locality, Thrashing Simulation, and Sequential Access workloads
 
 ---
 
-### 🔒 Module 4 — Deadlock Avoidance (Banker's Algorithm)
+### 🔒 Module 4 — Deadlock Avoidance & Concurrency Diagnostics
 
-Determine whether a system state is safe and simulate resource requests.
+Analyze system safety, resource allocation graphs, and structural conditions for deadlocks.
 
 **Features:**
-- ✅ **Safety state detection** — runs the Banker's Safety Algorithm and reports safe/unsafe verdict instantly
-- 📐 **Derived Need Matrix table** — auto-computed from Max − Allocation with full matrix display
-- 🪜 **Step-by-step evaluation trace** — shows Work vector progression, each process check, and execution order
-- 🧪 **Interactive Resource Request simulator** — test any process's resource request and see whether it can be safely granted
+- ✅ **Banker's Algorithm & Request Simulator** — test safety states, auto-compute the Need Matrix, and evaluate custom resource requests
+- 🕸️ **Interactive Resource Allocation Graph (RAG)** — visual node-edge mapping of process-resource allocation and wait-for states
+- 🔍 **Coffman Conditions Diagnostics** — active structural analysis across Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait
 
 ---
 
@@ -128,23 +124,28 @@ Outputs an optimized static bundle to the `dist/` directory.
 
 ## 📁 Project Structure
 
-```
+```text
 cp_OS/
 ├── public/
 ├── src/
 │   ├── components/
-│   │   ├── CPUScheduler.jsx        # Module 1 — CPU Scheduling
-│   │   ├── PageReplacement.jsx     # Module 2 — Page Replacement
-│   │   ├── DiskScheduling.jsx      # Module 3 — Disk Scheduling
-│   │   └── BankerAlgorithm.jsx     # Module 4 — Deadlock Avoidance
+│   │   ├── CPUScheduler.jsx              # Module 1 — CPU Scheduling
+│   │   ├── PageReplacement.jsx           # Module 2 — Page Replacement
+│   │   ├── DiskScheduling.jsx            # Module 3 — Disk Scheduling
+│   │   ├── BankerAlgorithm.jsx           # Module 4 — Banker's Algorithm
+│   │   ├── DeadlockAvoidance.jsx         # Module 4 Container
+│   │   ├── RAGVisualizer.jsx             # Resource Allocation Graph component
+│   │   ├── CoffmanConditionsPanel.jsx    # Coffman conditions diagnostic panel
+│   │   └── NVMeVisualizer.jsx            # NVMe multi-channel flash visualizer
 │   ├── utils/
-│   │   ├── cpuAlgorithms.js        # FCFS, SJF, SRTF, RR, Priority logic
-│   │   ├── pageAlgorithms.js       # FIFO, LRU, Optimal logic
-│   │   ├── diskAlgorithms.js       # FCFS, SSTF, SCAN, C-SCAN, LOOK, C-LOOK logic
-│   │   └── bankerAlgorithms.js     # Banker's safety & request evaluation logic
-│   ├── App.jsx                     # Root layout & sidebar navigation
-│   ├── main.jsx                    # React DOM entry point
-│   └── index.css                   # Global styles & Tailwind directives
+│   │   ├── cpuAlgorithms.js              # FCFS, SJF, SRTF, RR, Priority logic
+│   │   ├── pageAlgorithms.js             # FIFO, LRU, Optimal logic
+│   │   ├── diskAlgorithms.js             # Classical disk scheduling logic
+│   │   ├── diskPhysicsEngine.js          # ZBR, Dual-Actuator, & NVMe physics
+│   │   └── bankersEngine.js              # Safety & request evaluation logic
+│   ├── App.jsx                           # Root layout & sidebar navigation
+│   ├── main.jsx                          # React DOM entry point
+│   └── index.css                         # Global styles & Tailwind directives
 ├── index.html
 ├── vite.config.js
 └── package.json
