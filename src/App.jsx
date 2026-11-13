@@ -14,13 +14,13 @@ import {
 import CPUScheduler from './components/CPUScheduler'
 import PageReplacement from './components/PageReplacement'
 import DiskScheduling from './components/DiskScheduling'
-import BankerAlgorithm from './components/BankerAlgorithm'
+import DeadlockAvoidance from './components/DeadlockAvoidance'
 
 const modules = [
   { id: 'cpu', label: 'CPU Scheduling', icon: Cpu, badge: 'v2.0' },
   { id: 'page', label: 'Page Replacement', icon: Database, badge: 'v1.0' },
   { id: 'disk', label: 'Disk Scheduling', icon: HardDrive, badge: 'v1.0' },
-  { id: 'deadlock', label: 'Deadlock Avoidance', icon: ShieldCheck, badge: 'Soon' },
+  { id: 'deadlock', label: 'Deadlock Avoidance', icon: ShieldCheck, badge: 'v1.0' },
 ]
 
 export default function App() {
@@ -153,7 +153,9 @@ export default function App() {
                     ? 'CPU Scheduling Engine'
                     : activeModule === 'page'
                     ? 'Page Replacement Visualizer'
-                    : 'Disk Scheduling Simulator'}
+                    : activeModule === 'disk'
+                    ? 'Disk Scheduling Simulator'
+                    : "Deadlock Avoidance (Banker's Algorithm)"}
                 </h1>
               </div>
             </div>
@@ -171,7 +173,7 @@ export default function App() {
             <div className="border-b border-white/10 bg-[#0d1118] p-4 lg:hidden">
               <div className="flex flex-col gap-1">
                 {modules.map(({ id, label, icon: Icon }) => {
-                  const isEnabled = id === 'cpu' || id === 'page' || id === 'disk'
+                  const isEnabled = id === 'cpu' || id === 'page' || id === 'disk' || id === 'deadlock'
                   return (
                     <button
                       key={`mobile-${id}`}
@@ -204,7 +206,7 @@ export default function App() {
             {activeModule === 'cpu' && <CPUScheduler />}
             {activeModule === 'page' && <PageReplacement />}
             {activeModule === 'disk' && <DiskScheduling />}
-          {activeModule === 'deadlock' && <BankerAlgorithm />}
+            {activeModule === 'deadlock' && <DeadlockAvoidance />}
           </div>
         </section>
       </div>
